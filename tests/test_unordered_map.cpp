@@ -4,7 +4,8 @@
 
 using namespace DSA;
 
-void testInsertAndFind() {
+void testInsertAndFind() 
+{
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
@@ -21,7 +22,8 @@ void testInsertAndFind() {
   assert(map[4] == "");
 }
 
-void testErase() {
+void testErase() 
+{
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
@@ -33,7 +35,8 @@ void testErase() {
   assert(!map.erase(2));
 }
 
-void testUpdateValue() {
+void testUpdateValue() 
+{
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
@@ -43,7 +46,8 @@ void testUpdateValue() {
   assert(map.find(2) != nullptr && *map.find(2) == "two");
 }
 
-void testComplexKeys() {
+void testComplexKeys() 
+{
   UnorderedMap<std::string, int> map;
   map.insert("one", 1);
   map.insert("two", 2);
@@ -55,7 +59,8 @@ void testComplexKeys() {
   assert(map.find("four") == nullptr);
 }
 
-void testSizeAndEmpty() {
+void testSizeAndEmpty() 
+{
   UnorderedMap<int, std::string> map;
 
   assert(map.isEmpty());
@@ -73,7 +78,8 @@ void testSizeAndEmpty() {
   assert(map.size() == 2);
 }
 
-void testToString() {
+void testToString() 
+{
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
@@ -85,13 +91,27 @@ void testToString() {
   assert(map.toString() == "(1, one), (3, three)");
 }
 
-int main() {
+void testIterator() 
+{
+  UnorderedMap<int, std::string> map;
+  map.insert(1, "one");
+  map.insert(2, "two");
+  map[3] = "three";
+
+  assert(map.begin() != map.end());
+  map.clear();
+  assert(map.begin() == map.end());
+}
+
+int main() 
+{
   testInsertAndFind();
   testErase();
   testUpdateValue();
   testComplexKeys();
   testSizeAndEmpty();
   testToString();
+  testIterator();
 
   std::cout << "All tests passed!" << std::endl;
   return 0;

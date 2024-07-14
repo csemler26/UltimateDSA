@@ -33,3 +33,6 @@
 
 # Build Objects
 build/
+
+# IDE files
+.vscode/

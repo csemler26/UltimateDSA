@@ -15,11 +15,19 @@ const size_t NUMBER_OF_INDEX = 10;
 template <typename Key, typename Value>
 class UnorderedMap {
 public:
+  using iterator = typename std::list<std::pair<Key, Value>>::iterator;
+  using const_iterator = typename std::list<std::pair<Key, Value>>::const_iterator;
+
   UnorderedMap();
   ~UnorderedMap();
   bool insert(const Key& k, const Value& v);
   bool erase(const Key& k);
   
+  iterator begin();
+  iterator end();
+  const_iterator begin() const;
+  const_iterator end() const;
+
   Value* find(const Key& k);
   Value& operator[](const Key& k);
   
@@ -79,6 +87,40 @@ bool UnorderedMap<Key, Value>::erase(const Key& k)
     }
   }
   return false;
+}
+
+template<typename Key, typename Value>
+typename UnorderedMap<Key, Value>::iterator UnorderedMap<Key, Value>::begin() 
+{
+  for (auto& bucket : data_) {
+    if (!bucket.empty()) {
+      return bucket.begin();
+    }
+  }
+  return data_.back().end();
+}
+
+template<typename Key, typename Value>
+typename UnorderedMap<Key, Value>::iterator UnorderedMap<Key, Value>::end() 
+{
+  return data_.back().end();
+}
+
+template<typename Key, typename Value>
+typename UnorderedMap<Key, Value>::const_iterator UnorderedMap<Key, Value>::begin() const 
+{
+  for (const auto& bucket : data_) {
+    if (!bucket.empty()) {
+      return bucket.begin();
+    }
+  }
+  return data_.back().end();
+}
+
+template<typename Key, typename Value>
+typename UnorderedMap<Key, Value>::const_iterator UnorderedMap<Key, Value>::end() const 
+{
+  return data_.back().end();
 }
 
 template<typename Key, typename Value>
@@ -164,7 +206,5 @@ size_t UnorderedMap<Key, Value>::hashFunction(const Key& k) {
 }
 
 } // namespace DSA
-
-// #include "unordered_map.cpp"  // Relative path assuming .cpp is in the same folder
 
 #endif // UNORDEREDMAP_H
