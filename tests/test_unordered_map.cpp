@@ -1,4 +1,4 @@
-#include "../src/unordered_map.cpp"
+#include "unordered_map.h"
 #include <iostream>
 #include <cassert>
 

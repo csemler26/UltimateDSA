@@ -24,11 +24,6 @@ $(TEST_EXECUTABLE): $(LIB_OBJS) $(TEST_OBJS)
 	@echo "generating: $@"
 	$(CC) -o $@ $^ $(CFLAGS)
 
-# Rule to compile library source files into object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(wildcard $(IDIR)/*.h) | $(OBJ_DIR)
-	@echo "generating: $@"
-	$(CC) -c -o $@ $< $(CFLAGS)
-
 # Rule to compile test source files into object files
 $(OBJ_DIR)/%.o: $(TEST_DIR)/%.cpp $(wildcard $(IDIR)/*.h) | $(OBJ_DIR)
 	@echo "generating: $@"
