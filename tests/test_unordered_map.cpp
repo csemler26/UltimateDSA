@@ -4,115 +4,160 @@
 
 using namespace DSA;
 
-void testInsertAndFind() 
+// Helper function to check conditions and print error messages
+bool checkCondition(bool condition, const std::string& functionName, const int& lineNum) 
 {
+  if (!condition) {
+    std::cerr << "\033[31mError \033[0min \033[36m" << functionName << "\033[0m at \033[35mline " << lineNum << "\033[0m" << std::endl;
+  }
+  return condition;
+}
+
+bool testInsertAndFind() 
+{
+  bool passed = true;
+
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
+  
+  passed &= checkCondition(map.find(1) != nullptr && *map.find(1) == "one", __FILE__, __LINE__);
+  passed &= checkCondition(map.find(2) != nullptr && *map.find(2) == "two", __FILE__, __LINE__);
+  passed &= checkCondition(map.find(3) != nullptr && *map.find(3) == "three", __FILE__, __LINE__);
+  passed &= checkCondition(map.find(4) == nullptr, __FILE__, __LINE__);
 
-  assert(map.find(1) != nullptr && *map.find(1) == "one");
-  assert(map.find(2) != nullptr && *map.find(2) == "two");
-  assert(map.find(3) != nullptr && *map.find(3) == "three");
-  assert(map.find(4) == nullptr);
+  passed &= checkCondition(map[1] == "one", __FILE__, __LINE__);
+  passed &= checkCondition(map[2] == "two", __FILE__, __LINE__);
+  passed &= checkCondition(map[3] == "three", __FILE__, __LINE__);
+  passed &= checkCondition(map[4] == "", __FILE__, __LINE__);
 
-  assert(map[1] == "one");
-  assert(map[2] == "two");
-  assert(map[3] == "three");
-  assert(map[4] == "");
+  return passed;
 }
 
-void testErase() 
+bool testErase() 
 {
+  bool passed = true;
+
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
   map.insert(3, "three");
 
-  assert(map.erase(2));
-  assert(map.find(2) == nullptr);
+  passed &= checkCondition(map.erase(2), __FILE__, __LINE__);
+  passed &= checkCondition(map.find(2) == nullptr, __FILE__, __LINE__);
+  passed &= checkCondition(!map.erase(2), __FILE__, __LINE__);
 
-  assert(!map.erase(2));
+  return passed;
 }
 
-void testUpdateValue() 
+bool testUpdateValue() 
 {
+  bool passed = true;
+
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
 
   map.insert(2, "two_updated");
 
-  assert(map.find(2) != nullptr && *map.find(2) == "two");
+  passed &= checkCondition(map.find(2) != nullptr && *map.find(2) == "two", __FILE__, __LINE__);
+
+  return passed;
 }
 
-void testComplexKeys() 
+bool testComplexKeys() 
 {
+  bool passed = true;
+
   UnorderedMap<std::string, int> map;
   map.insert("one", 1);
   map.insert("two", 2);
   map.insert("three", 3);
 
-  assert(map.find("one") != nullptr && *map.find("one") == 1);
-  assert(map.find("two") != nullptr && *map.find("two") == 2);
-  assert(map.find("three") != nullptr && *map.find("three") == 3);
-  assert(map.find("four") == nullptr);
+  passed &= checkCondition(map.find("one") != nullptr && *map.find("one") == 1, __FILE__, __LINE__);
+  passed &= checkCondition(map.find("two") != nullptr && *map.find("two") == 2, __FILE__, __LINE__);
+  passed &= checkCondition(map.find("three") != nullptr && *map.find("three") == 3, __FILE__, __LINE__);
+  passed &= checkCondition(map.find("four") == nullptr, __FILE__, __LINE__);
+
+  return passed;
 }
 
-void testSizeAndEmpty() 
+bool testSizeAndEmpty() 
 {
+  bool passed = true;
+
   UnorderedMap<int, std::string> map;
 
-  assert(map.isEmpty());
-  assert(map.size() == 0);
+  passed &= checkCondition(map.isEmpty(), __FILE__, __LINE__);
+  passed &= checkCondition(map.size() == 0, __FILE__, __LINE__);
 
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
   
-  assert(!map.isEmpty());
-  assert(map.size() == 3);
+  passed &= checkCondition(!map.isEmpty(), __FILE__, __LINE__);
+  passed &= checkCondition(map.size() == 3, __FILE__, __LINE__);
   
-  assert(map.erase(2));
-  assert(!map.isEmpty());
-  assert(map.size() == 2);
+  passed &= checkCondition(map.erase(2), __FILE__, __LINE__);
+  passed &= checkCondition(!map.isEmpty(), __FILE__, __LINE__);
+  passed &= checkCondition(map.size() == 2, __FILE__, __LINE__);
+
+  return passed;
 }
 
-void testToString() 
+bool testToString() 
 {
+  bool passed = true;
+
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
 
-  assert(map.toString() == "(1, one), (2, two), (3, three)");
+  passed &= checkCondition(map.toString() == "(1, one), (2, two), (3, three)", __FILE__, __LINE__);
 
   map.erase(2);
-  assert(map.toString() == "(1, one), (3, three)");
+  passed &= checkCondition(map.toString() == "(1, one), (3, three)", __FILE__, __LINE__);
+
+  return passed;
 }
 
-void testIterator() 
+bool testIterator() 
 {
+  bool passed = true;
   UnorderedMap<int, std::string> map;
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
 
-  assert(map.begin() != map.end());
+  passed &= checkCondition(map.begin() != map.end(), __FILE__, __LINE__);
   map.clear();
-  assert(map.begin() == map.end());
+  passed &= checkCondition(map.begin() == map.end(), __FILE__, __LINE__);
+
+  return passed;
 }
 
 int main() 
 {
-  testInsertAndFind();
-  testErase();
-  testUpdateValue();
-  testComplexKeys();
-  testSizeAndEmpty();
-  testToString();
-  testIterator();
+  bool allPassed = true;
+ 
+  allPassed &= testInsertAndFind();
+  allPassed &= testErase();
+  allPassed &= testUpdateValue();
+  allPassed &= testComplexKeys();
+  allPassed &= testSizeAndEmpty();
+  allPassed &= testToString();
+  allPassed &= testIterator();
 
-  std::cout << "All tests passed!" << std::endl;
+  if (allPassed)
+  {
+    std::cout << "\033[32mAll unordered_map tests passed!\033[0m" << std::endl;
+  }
+  else
+  {
+    std::cout << "\033[31mUnorded_map tests failed.\033[0m" << std::endl;
+  }
+
   return 0;
 }
