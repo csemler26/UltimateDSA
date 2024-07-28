@@ -30,6 +30,12 @@ public:
   
   // Accessors
   dataType* find(const size_t& index);
+
+  // Iterator
+  dataType* begin();
+  dataType* end();
+  const dataType* begin() const;
+  const dataType* end() const;
   
   // General
   std::string toString() const;
@@ -152,6 +158,30 @@ template <typename dataType>
 dataType* Vector<dataType>::find(const size_t& index) 
 {
   return (index < size_) ? &data_[index] : nullptr;
+}
+
+template<typename dataType>
+dataType* Vector<dataType>::begin() 
+{
+  return data_;
+}
+
+template<typename dataType>
+dataType* Vector<dataType>::end() 
+{
+  return data_ + size_;
+}
+
+template<typename dataType>
+const dataType* Vector<dataType>::begin() const 
+{
+  return data_;
+}
+
+template<typename dataType>
+const dataType* Vector<dataType>::end() const 
+{
+  return data_ + size_;
 }
 
 template<typename dataType>
