@@ -1,30 +1,32 @@
-#include "unordered_map.h"
-#include <iostream>
 #include <cassert>
+#include <iostream>
+
+#include "unordered_map.h"
 
 // ANSI color codes
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[35m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[35m"
 #define MAGENTA "\033[36m"
-#define RESET   "\033[0m"
+#define RESET "\033[0m"
 
 using namespace DSA;
 
 #define CHECK(cond) checkCondition((cond), __FILE__, __LINE__)
 
 // Helper function to check conditions and print error messages
-bool checkCondition(bool condition, const std::string& functionName, const int& lineNum) 
+bool checkCondition(bool condition, const std::string& functionName, const int& lineNum)
 {
-  if (!condition) 
+  if (!condition)
   {
-    std::cerr << RED << "Error" << RESET << " in " << MAGENTA << functionName << RESET << " at " << BLUE << "line " << lineNum << RESET << std::endl;
+    std::cerr << RED << "Error" << RESET << " in " << MAGENTA << functionName << RESET << " at "
+              << BLUE << "line " << lineNum << RESET << std::endl;
   }
   return condition;
 }
 
-bool testInsertAndFind() 
+bool testInsertAndFind()
 {
   bool passed = true;
 
@@ -32,7 +34,7 @@ bool testInsertAndFind()
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
-  
+
   passed &= CHECK(map.find(1) != nullptr && *map.find(1) == "one");
   passed &= CHECK(map.find(2) != nullptr && *map.find(2) == "two");
   passed &= CHECK(map.find(3) != nullptr && *map.find(3) == "three");
@@ -46,7 +48,7 @@ bool testInsertAndFind()
   return passed;
 }
 
-bool testErase() 
+bool testErase()
 {
   bool passed = true;
 
@@ -62,7 +64,7 @@ bool testErase()
   return passed;
 }
 
-bool testUpdateValue() 
+bool testUpdateValue()
 {
   bool passed = true;
 
@@ -77,7 +79,7 @@ bool testUpdateValue()
   return passed;
 }
 
-bool testComplexKeys() 
+bool testComplexKeys()
 {
   bool passed = true;
 
@@ -94,7 +96,7 @@ bool testComplexKeys()
   return passed;
 }
 
-bool testSizeAndEmpty() 
+bool testSizeAndEmpty()
 {
   bool passed = true;
 
@@ -106,10 +108,10 @@ bool testSizeAndEmpty()
   map.insert(1, "one");
   map.insert(2, "two");
   map[3] = "three";
-  
+
   passed &= CHECK(!map.isEmpty());
   passed &= CHECK(map.size() == 3);
-  
+
   passed &= CHECK(map.erase(2));
   passed &= CHECK(!map.isEmpty());
   passed &= CHECK(map.size() == 2);
@@ -117,7 +119,7 @@ bool testSizeAndEmpty()
   return passed;
 }
 
-bool testToString() 
+bool testToString()
 {
   bool passed = true;
 
@@ -134,7 +136,7 @@ bool testToString()
   return passed;
 }
 
-bool testIterator() 
+bool testIterator()
 {
   bool passed = true;
   UnorderedMap<int, std::string> map;
@@ -143,16 +145,23 @@ bool testIterator()
   map[3] = "three";
 
   passed &= CHECK(map.begin() != map.end());
+
+  auto it = map.begin();
+  passed &= CHECK(it->first == 1);
+  ++it;
+  passed &= CHECK(it->first == 2);
+
   map.clear();
+  passed &= CHECK(map.size() == 0);
   passed &= CHECK(map.begin() == map.end());
 
   return passed;
 }
 
-int main() 
+int main()
 {
   bool allPassed = true;
- 
+
   allPassed &= testInsertAndFind();
   allPassed &= testErase();
   allPassed &= testUpdateValue();

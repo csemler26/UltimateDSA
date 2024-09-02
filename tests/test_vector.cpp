@@ -1,30 +1,32 @@
-#include "vector.h"
-#include <iostream>
 #include <cassert>
+#include <iostream>
+
+#include "vector.h"
 
 // ANSI color codes
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[35m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[35m"
 #define MAGENTA "\033[36m"
-#define RESET   "\033[0m"
+#define RESET "\033[0m"
 
 using namespace DSA;
 
 #define CHECK(cond) checkCondition((cond), __FILE__, __LINE__)
 
 // Helper function to check conditions and print error messages
-bool checkCondition(bool condition, const std::string& functionName, const int& lineNum) 
+bool checkCondition(bool condition, const std::string& functionName, const int& lineNum)
 {
-  if (!condition) 
+  if (!condition)
   {
-    std::cerr << RED << "Error" << RESET << " in " << MAGENTA << functionName << RESET << " at line " << BLUE << lineNum << RESET << std::endl;
+    std::cerr << RED << "Error" << RESET << " in " << MAGENTA << functionName << RESET
+              << " at line " << BLUE << lineNum << RESET << std::endl;
   }
   return condition;
 }
 
-bool testPushBackAndPopBack() 
+bool testPushBackAndPopBack()
 {
   bool passed = true;
 
@@ -49,7 +51,7 @@ bool testPushBackAndPopBack()
 
   passed &= CHECK(vec[0] == 0);
   passed &= CHECK(vec[1] != 1);
-  
+
   vec.pop_back();
   passed &= CHECK(vec.find(0) == nullptr);
   passed &= CHECK(vec.toString() == "[]");
@@ -58,7 +60,7 @@ bool testPushBackAndPopBack()
   return passed;
 }
 
-bool testInsertAndFind() 
+bool testInsertAndFind()
 {
   bool passed = true;
 
@@ -77,7 +79,7 @@ bool testInsertAndFind()
   return passed;
 }
 
-bool testErase() 
+bool testErase()
 {
   bool passed = true;
 
@@ -96,10 +98,10 @@ bool testErase()
   return passed;
 }
 
-bool testUpdateValue() 
+bool testUpdateValue()
 {
   bool passed = true;
-  
+
   Vector<int> vec;
   vec.push_back(0);
   vec.push_back(1);
@@ -115,7 +117,7 @@ bool testUpdateValue()
   return passed;
 }
 
-bool testSizeAndEmpty() 
+bool testSizeAndEmpty()
 {
   bool passed = true;
 
@@ -138,12 +140,12 @@ bool testSizeAndEmpty()
   return passed;
 }
 
-bool testToString() 
+bool testToString()
 {
   bool passed = true;
 
   Vector<int> vec;
-  
+
   vec.push_back(0);
   vec.push_back(1);
   vec.push_back(2);
@@ -152,10 +154,10 @@ bool testToString()
 
   vec.erase(2);
   passed &= CHECK(vec.toString() == "[0, 1]");
-  
+
   vec.erase(0);
   passed &= CHECK(vec.toString() == "[1]");
-  
+
   vec.push_back(3);
   vec.push_back(4);
   vec.push_back(5);
@@ -170,38 +172,40 @@ bool testToString()
   return passed;
 }
 
-bool testClear() {
-    bool passed = true;
+bool testClear()
+{
+  bool passed = true;
 
-    Vector<int> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec[2] = 3;
+  Vector<int> vec;
+  vec.push_back(1);
+  vec.push_back(2);
+  vec[2] = 3;
 
-    vec.clear();
-    passed &= CHECK(vec.isEmpty());
-    passed &= CHECK(vec.size() == 0);
+  vec.clear();
+  passed &= CHECK(vec.isEmpty());
+  passed &= CHECK(vec.size() == 0);
 
-    return passed;
+  return passed;
 }
 
-bool testCapacity() {
-    bool passed = true;
-    
-    Vector<int> vec;
-    vec.push_back(1);
-    vec.push_back(2);
-    vec[2] = 3;
+bool testCapacity()
+{
+  bool passed = true;
 
-    passed &= CHECK(vec.capacity() >= vec.size());
+  Vector<int> vec;
+  vec.push_back(1);
+  vec.push_back(2);
+  vec[2] = 3;
 
-    return passed;
+  passed &= CHECK(vec.capacity() >= vec.size());
+
+  return passed;
 }
 
-int main() 
+int main()
 {
   bool allPassed = true;
- 
+
   allPassed &= testInsertAndFind();
   allPassed &= testErase();
   allPassed &= testUpdateValue();
