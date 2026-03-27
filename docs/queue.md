@@ -72,13 +72,13 @@ while (!customerLine.empty())
 - The high-performance choice
 - Not a standard STL container but is arguably the most important data structure for systems programming
 - Uses a fixed-size **std::array** or **std::vector** and two integers (head and tail indices) that wrap around using modulo arithmetic
-- Pros
+- **Pros**
   - No allocation: once created, it never calls new or malloc
   - Perfect cache locality: it is a single contiguous block of memory
   - Thread safety: it is easier to make a "wait-free" single-producer/single-consumer queue using a ring buffer than any other structure
-- Cons
+- **Cons**
   - Fixed size: if the queue fills up, you must either drop data (lossy) or blocks the producer (wait). Resizing circular buffer is expensive and complex
-- When to use
+- **When to use**
   - When latency is critical
   - Inter-thread communication: passing messages between a UI thread and a background worker
   - Embedded systems: where heap allocation is forbidden
@@ -87,21 +87,22 @@ while (!customerLine.empty())
 - The default container for **std::queue** 
 - Strikes the best balance for general-purpose computing
 - Allocates memory in "pages" or chunks, linked by a central directory
-- Pros
+- **Pros**
   - Fast expansion: can grow in both directions without copying existing data to a new location
   - Good cache locality
-- Cons
+- **Cons**
   - Blocked overhead: manages a map of pointers to these chunks, which adds slight overhead compared to a raw array
-- Safe choice for queues
+- **When to use**
+  - Safe choice for queues
 
 ### std::list
-- Pros
+- **Pros**
   - Iterator/pointer stability: if you have a pointer to an element inside the queue, that pointer remains valid even if you push/pop other elements
   - Cheap slicing: you can move large sections of one queue to another just by swapping pointers, without copying the data
-- Cons
+- **Cons**
   - Cache thrashing: Every element is a separate heap allocation. Traversing or processing the queue, causes constant "cache misses" because nodes are scattered in RAM
   - Memory overhead: Every element requires extra memory for *prev* and *next* pointers
-- When to use
+- **When to use**
   - When the objects stored are very large/expensive to copy
   - When you need to merge queues frequently
   - When external observers hold pointers to queue elements
